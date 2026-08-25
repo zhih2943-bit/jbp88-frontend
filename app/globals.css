@@ -75,11 +75,9 @@ svg { display:block; }
 .game-card:active { transform:scale(.97); }
 .game-card.hot { background:linear-gradient(140deg,#ff6049,#c320c8 50%,#4b19a9); }.game-card.arcade { background:linear-gradient(140deg,#263d8b,#6b25b8 55%,#ef3f9b); }.game-card.live { background:linear-gradient(140deg,#c57442,#67339f 50%,#202b79); }.game-card.ocean { background:linear-gradient(140deg,#1697bd,#1758a5 55%,#5230aa); }.game-card.lottery { background:linear-gradient(140deg,#f56a72,#ad398c 55%,#5a228c); }.game-card.sport { background:linear-gradient(140deg,#189d73,#20649b 55%,#3c2a94); }.game-card.chess { background:linear-gradient(140deg,#c8893d,#994b40 55%,#542070); }.game-card.movie { background:linear-gradient(140deg,#8d3fee,#423dba 55%,#1d75a3); }
 .game-card.card-1 { filter:hue-rotate(25deg); }.game-card.card-2 { filter:hue-rotate(70deg); }.game-card.card-3 { filter:hue-rotate(115deg); }
-.game-card.hot,.game-card.arcade,.game-card.live { background-image:url("/jbp88-actions-v2.png?v=3"); background-size:568px 991px; background-repeat:no-repeat; filter:none; }
-.game-card.hot.card-0 { background-position:0 -275px; }.game-card.hot.card-1 { background-position:-128px -275px; }.game-card.hot.card-2 { background-position:-272px -275px; }.game-card.hot.card-3 { background-position:-416px -275px; }
-.game-card.arcade.card-0 { background-position:0 -539px; }.game-card.arcade.card-1 { background-position:-176px -539px; }.game-card.arcade.card-2 { background-position:-370px -539px; }.game-card.arcade.card-3 { background-position:-434px -539px; }
-.game-card.live.card-0 { background-position:0 -803px; }.game-card.live.card-1 { background-position:-176px -803px; }.game-card.live.card-2 { background-position:-370px -803px; }
-.game-card.hot .game-shine,.game-card.hot .game-art,.game-card.hot .game-copy,.game-card.arcade .game-shine,.game-card.arcade .game-art,.game-card.arcade .game-copy,.game-card.live .game-shine,.game-card.live .game-art,.game-card.live .game-copy { display:none; }
+.game-card.has-cover { filter:none; background:#151633; }
+.game-cover { position:absolute; inset:0; z-index:2; width:100%; height:100%; object-fit:cover; object-position:center; display:block; }
+.game-card.has-cover .game-shine,.game-card.has-cover .game-art,.game-card.has-cover .game-copy { display:none; }
 .game-shine { position:absolute; inset:-40% auto auto -20%; width:90px; height:130px; transform:rotate(30deg); background:linear-gradient(90deg,transparent,rgba(255,255,255,.24),transparent); }
 .game-art { position:absolute; top:18px; left:0; right:0; text-align:center; font-size:70px; filter:drop-shadow(0 8px 12px rgba(0,0,0,.35)); }
 .game-copy { position:absolute; left:7px; right:7px; bottom:10px; display:flex; flex-direction:column; align-items:center; text-align:center; text-shadow:0 2px 5px #000; }
