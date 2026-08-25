@@ -20,18 +20,18 @@ const quickActions: Array<{ label: Exclude<DialogName, "活动详情" | "下载�
   { label: "邀请好友", icon: "invite", color: "blue" },
 ];
 
-const gameSections: Array<{ title: string; icon: IconName; tone: string; games: Array<{ title: string; tag: string; art: string }> }> = [
+const gameSections: Array<{ title: string; icon: IconName; tone: string; games: Array<{ title: string; tag: string; art: string; image?: string }> }> = [
   { title: "热门", icon: "flame", tone: "hot", games: [
-    { title: "极速糖果", tag: "PRAGMATIC PLAY", art: "🍭" }, { title: "麻将大胜三宝壶", tag: "PRAGMATIC PLAY", art: "🐉" },
-    { title: "麻将胡了", tag: "PGSOFT", art: "🀄" }, { title: "麻将胡了2", tag: "PGSOFT", art: "🀄" },
+    { title: "极速糖果", tag: "PRAGMATIC PLAY", art: "🍭", image: "/game-covers/hot-1.png" }, { title: "麻将大胜三宝壶", tag: "PRAGMATIC PLAY", art: "🐉", image: "/game-covers/hot-2.png" },
+    { title: "麻将胡了", tag: "PGSOFT", art: "🀄", image: "/game-covers/hot-3.png" }, { title: "麻将胡了2", tag: "PGSOFT", art: "🀄", image: "/game-covers/hot-4.png" },
   ]},
   { title: "电子游戏", icon: "slots", tone: "arcade", games: [
-    { title: "PP电子", tag: "PRAGMATIC PLAY", art: "⚡" }, { title: "PG电子", tag: "PGSOFT", art: "🎰" },
-    { title: "CQ9电子", tag: "CQ9", art: "👑" }, { title: "JDB电子", tag: "JDB", art: "💎" },
+    { title: "PP电子", tag: "PRAGMATIC PLAY", art: "⚡", image: "/game-covers/arcade-1.png" }, { title: "PG电子", tag: "PGSOFT", art: "🎰", image: "/game-covers/arcade-2.png" },
+    { title: "CQ9电子", tag: "CQ9", art: "👑", image: "/game-covers/arcade-3.png" }, { title: "JDB电子", tag: "JDB", art: "💎" },
   ]},
   { title: "真人视讯", icon: "video", tone: "live", games: [
-    { title: "PP真人", tag: "PRAGMATIC PLAY", art: "♠️" }, { title: "BBIN视讯", tag: "BBIN", art: "♦️" },
-    { title: "即将推出", tag: "COMING SOON", art: "⌛" },
+    { title: "PP真人", tag: "PRAGMATIC PLAY", art: "♠️", image: "/game-covers/live-1.png" }, { title: "BBIN视讯", tag: "BBIN", art: "♦️", image: "/game-covers/live-2.png" },
+    { title: "即将推出", tag: "COMING SOON", art: "⌛", image: "/game-covers/live-3.png" },
   ]},
   { title: "捕鱼游戏", icon: "fish", tone: "ocean", games: [
     { title: "深海探险", tag: "OCEAN", art: "🐠" }, { title: "珊瑚秘境", tag: "REEF", art: "🪸" },
@@ -171,7 +171,7 @@ function HomeView({ slide, setSlide, category, setCategory, sections, openDialog
     <div className="content-area">
       {sections.map((section) => <section className="game-section" key={section.title}>
         <div className="section-heading"><h2><span><Icon name={section.icon} /></span>{section.title}</h2><button onClick={() => setCategory(section.title)} aria-label={`查看更多${section.title}`}><Icon name="chevron" /></button></div>
-        <div className="game-row">{section.games.map((game, index) => <button className={`game-card ${section.tone} card-${index}`} key={game.title} onClick={() => openDialog("游戏详情", game.title)}><span className="game-shine" /><span className="game-art" aria-hidden="true">{game.art}</span><span className="game-copy"><strong>{game.title}</strong><small>{game.tag}</small></span></button>)}</div>
+        <div className="game-row">{section.games.map((game, index) => <button className={`game-card ${section.tone} card-${index} ${game.image ? "has-cover" : ""}`} key={game.title} onClick={() => openDialog("游戏详情", game.title)}>{game.image && <img className="game-cover" src={game.image} alt={`${game.title} 游戏封面`} />}<span className="game-shine" /><span className="game-art" aria-hidden="true">{game.art}</span><span className="game-copy"><strong>{game.title}</strong><small>{game.tag}</small></span></button>)}</div>
       </section>)}
       <section className="trust-strip"><div><Icon name="shield" /><b>原创界面</b><small>独立设计</small></div><div><Icon name="check" /><b>演示模式</b><small>无真实资金</small></div><div><Icon name="star" /><b>流畅体验</b><small>移动端适配</small></div></section>
       <p className="legal-note">jbp88 原创前端界面演示，与第三方平台无隶属关系，不提供真钱游戏、充值、提现或账户服务。</p>
