@@ -22,16 +22,16 @@ const quickActions: Array<{ label: Exclude<DialogName, "活动详情" | "下载�
 
 const gameSections: Array<{ title: string; icon: IconName; tone: string; games: Array<{ title: string; tag: string; art: string }> }> = [
   { title: "热门", icon: "flame", tone: "hot", games: [
-    { title: "甜蜜冲刺", tag: "10,000", art: "🍭" }, { title: "烈焰金猴", tag: "大奖赛", art: "🐒" },
-    { title: "麻将胡了", tag: "经典", art: "🀄" }, { title: "好运连连", tag: "每日", art: "🍊" },
+    { title: "极速糖果", tag: "PRAGMATIC PLAY", art: "🍭" }, { title: "麻将大胜三宝壶", tag: "PRAGMATIC PLAY", art: "🐉" },
+    { title: "麻将胡了", tag: "PGSOFT", art: "🀄" }, { title: "麻将胡了2", tag: "PGSOFT", art: "🀄" },
   ]},
   { title: "电子游戏", icon: "slots", tone: "arcade", games: [
-    { title: "星际电子", tag: "ARCADE", art: "👾" }, { title: "霓虹乐园", tag: "PLAY", art: "🎡" },
-    { title: "黄金传说", tag: "QUEST", art: "🪙" }, { title: "极速赛车", tag: "RACING", art: "🏎️" },
+    { title: "PP电子", tag: "PRAGMATIC PLAY", art: "⚡" }, { title: "PG电子", tag: "PGSOFT", art: "🎰" },
+    { title: "CQ9电子", tag: "CQ9", art: "👑" }, { title: "JDB电子", tag: "JDB", art: "💎" },
   ]},
   { title: "真人视讯", icon: "video", tone: "live", games: [
-    { title: "星光舞台", tag: "LIVE", art: "🎙️" }, { title: "魔术剧场", tag: "SHOW", art: "🎩" },
-    { title: "互动演播室", tag: "STUDIO", art: "🎬" },
+    { title: "PP真人", tag: "PRAGMATIC PLAY", art: "♠️" }, { title: "BBIN视讯", tag: "BBIN", art: "♦️" },
+    { title: "即将推出", tag: "COMING SOON", art: "⌛" },
   ]},
   { title: "捕鱼游戏", icon: "fish", tone: "ocean", games: [
     { title: "深海探险", tag: "OCEAN", art: "🐠" }, { title: "珊瑚秘境", tag: "REEF", art: "🪸" },
@@ -98,7 +98,7 @@ export default function Home() {
     event.preventDefault();
     setLoggedIn(true);
     setAuthMode(null);
-    setToast(authMode === "注册" ? "演示账号注册成功" : "登录成功，欢迎回来");
+    setToast(authMode === "注册" ? "账号注册成功" : "登录成功，欢迎回来");
   }
 
   function openDialog(name: DialogName, item = "") {
@@ -158,14 +158,14 @@ function HomeView({ slide, setSlide, category, setCategory, sections, openDialog
   sections: typeof gameSections; openDialog: (name: DialogName, item?: string) => void;
 }) {
   const headline = ["jbp88 幸运新世界", "每日登录 领取积分", "好友同乐 周末加倍"][slide];
-  const copy = ["全新界面体验，畅玩精选内容", "完成演示任务，解锁更多徽章", "邀请好友体验原创游戏大厅"][slide];
+  const copy = ["全新界面体验，畅玩精选内容", "完成每日任务，解锁更多奖励", "邀请好友体验 jbp88 游戏大厅"][slide];
   return <>
     <section className="hero" aria-label="活动轮播">
       <img src="/jbp88-logo.jpg" alt="jbp88 聚宝盆金蟾品牌图" />
       <div className="hero-overlay"><span className="eyebrow">WELCOME BONUS</span><h1>{headline}</h1><p>{copy}</p><button onClick={() => openDialog("活动详情", headline)}>立即体验</button></div>
       <div className="carousel-dots" aria-label="轮播页码">{[0, 1, 2].map((item) => <button key={item} className={slide === item ? "active" : ""} onClick={() => setSlide(item)} aria-label={`转到第 ${item + 1} 张`} />)}</div>
     </section>
-    <div className="ticker" role="status"><Icon name="speaker" /><div>欢迎来到 jbp88 游戏大厅演示版。本页面仅展示原创界面与交互，不提供真实充值、提现或投注服务。</div></div>
+    <div className="ticker" role="status"><Icon name="speaker" /><div>欢迎来到 jbp88 游戏大厅，精彩活动与热门游戏尽在掌握。</div></div>
     <section className="quick-grid" aria-label="快捷功能">{quickActions.map((action) => <button key={action.label} onClick={() => openDialog(action.label)}><span className={`quick-icon ${action.color}`}><Icon name={action.icon} /></span><b>{action.label}</b></button>)}</section>
     <nav className="category-tabs" aria-label="游戏分类">{categories.map((item) => <button key={item.name} className={category === item.name ? "active" : ""} onClick={() => setCategory(item.name)}><Icon name={item.icon} /><span>{item.name}</span></button>)}</nav>
     <div className="content-area">
@@ -198,7 +198,7 @@ function ProfileView({ loggedIn, setAuthMode, openDialog, onLogout }: { loggedIn
 }
 
 function AuthDialog({ mode, setMode, onSubmit }: { mode: "登录" | "注册"; setMode: (value: "登录" | "注册" | null) => void; onSubmit: (event: FormEvent<HTMLFormElement>) => void }) {
-  return <div className="modal-backdrop" onClick={() => setMode(null)}><section className="auth-modal" role="dialog" aria-modal="true" onClick={(event) => event.stopPropagation()}><button className="close-button" onClick={() => setMode(null)} aria-label="关闭"><Icon name="close" /></button><img src="/jbp88-logo.jpg" alt="jbp88" /><span>JBP88 MEMBER</span><h2>{mode}</h2><p>{mode === "登录" ? "欢迎回来，请输入演示账号" : "创建一个本地演示账号"}</p><form onSubmit={onSubmit}><label><Icon name="user" /><input required placeholder={mode === "登录" ? "用户名或邮箱" : "设置用户名"} /></label>{mode === "注册" && <label><Icon name="mail" /><input required type="email" placeholder="电子邮箱" /></label>}<label><Icon name="lock" /><input required type="password" minLength={6} placeholder="密码（至少6位）" /><Icon name="eye" /></label><button type="submit" className="primary-button">{mode}</button></form><button className="switch-auth" onClick={() => setMode(mode === "登录" ? "注册" : "登录")}>{mode === "登录" ? "没有账号？立即注册" : "已有账号？返回登录"}</button><small className="local-only"><Icon name="shield" />资料仅用于本地界面演示，不会上传</small></section></div>;
+  return <div className="modal-backdrop auth-backdrop"><section className="auth-modal" role="dialog" aria-modal="true"><button className="close-button" onClick={() => setMode(null)} aria-label="关闭"><Icon name="close" /></button><div className="auth-brand"><img src="/jbp88-logo.jpg" alt="jbp88" /><strong>jbp88</strong><span>JBP88 MEMBER</span></div><h2>{mode === "登录" ? "欢迎登录" : "注册新账号"}</h2><p>{mode === "登录" ? "登录您的 jbp88 会员账号" : "创建您的 jbp88 会员账号"}</p><form onSubmit={onSubmit}><label><Icon name="user" /><input required placeholder={mode === "登录" ? "用户名 / 手机号码" : "设置用户名"} /></label>{mode === "注册" && <label><Icon name="phone" /><input required inputMode="tel" placeholder="手机号码" /></label>}<label><Icon name="lock" /><input required type="password" minLength={6} placeholder="登录密码（至少6位）" /><Icon name="eye" /></label>{mode === "注册" && <label><Icon name="lock" /><input required type="password" minLength={6} placeholder="再次确认密码" /></label>}<button type="submit" className="primary-button">{mode}</button></form><div className="auth-links"><button type="button">忘记密码？</button><button type="button" className="switch-auth" onClick={() => setMode(mode === "登录" ? "注册" : "登录")}>{mode === "登录" ? "免费注册" : "返回登录"}</button></div><small className="local-only"><Icon name="shield" />安全加密保护您的账号资料</small></section></div>;
 }
 
 function ActionDialog({ name, selectedItem, onClose, onConfirm }: { name: Exclude<DialogName, null>; selectedItem: string; onClose: () => void; onConfirm: (message: string) => void }) {
