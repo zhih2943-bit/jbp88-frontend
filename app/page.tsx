@@ -59,7 +59,7 @@ const navItems: Array<{ name: MainView; icon: IconName }> = [
 const activities = [
   { tag: "新会员", title: "注册即领体验积分", copy: "完成注册后即可解锁新手任务与专属徽章。", tone: "gold", icon: "gift" as IconName },
   { tag: "每日活动", title: "连续签到七日礼", copy: "每日回来签到，连续七天可点亮全部奖励。", tone: "violet", icon: "activity" as IconName },
-  { tag: "好友计划", title: "邀请好友一起体验", copy: "分享演示邀请码，与好友一起探索游戏大厅。", tone: "blue", icon: "invite" as IconName },
+  { tag: "好友计划", title: "邀请好友一起体验", copy: "分享专属邀请码，与好友一起探索游戏大厅。", tone: "blue", icon: "invite" as IconName },
 ];
 
 export default function Home() {
@@ -114,7 +114,7 @@ export default function Home() {
   function sendMessage(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!chatText.trim()) return;
-    setMessages((items) => [...items, chatText.trim(), "已收到您的消息，演示客服稍后为您处理。"]);
+    setMessages((items) => [...items, chatText.trim(), "已收到您的消息，在线客服稍后为您处理。"]);
     setChatText("");
   }
 
@@ -139,7 +139,7 @@ export default function Home() {
         {view === "活动" && <ActivityView openDialog={openDialog} />}
         {view === "客服" && <SupportView messages={messages} chatText={chatText} setChatText={setChatText} sendMessage={sendMessage} faq={faq} setFaq={setFaq} />}
         {view === "下载" && <DownloadView openDialog={openDialog} />}
-        {view === "我的" && <ProfileView loggedIn={loggedIn} setAuthMode={setAuthMode} openDialog={openDialog} onLogout={() => { setLoggedIn(false); setToast("已退出演示账号"); }} />}
+        {view === "我的" && <ProfileView loggedIn={loggedIn} setAuthMode={setAuthMode} openDialog={openDialog} onLogout={() => { setLoggedIn(false); setToast("已退出账号"); }} />}
 
         <nav className="bottom-nav" aria-label="底部导航">
           {navItems.map((item) => <button key={item.name} className={view === item.name ? "active" : ""} onClick={() => changeView(item.name)}><Icon name={item.icon} /><b>{item.name}</b></button>)}
@@ -173,28 +173,27 @@ function HomeView({ slide, setSlide, category, setCategory, sections, openDialog
         <div className="section-heading"><h2><span><Icon name={section.icon} /></span>{section.title}</h2><button onClick={() => setCategory(section.title)} aria-label={`查看更多${section.title}`}><Icon name="chevron" /></button></div>
         <div className="game-row">{section.games.map((game, index) => <button className={`game-card ${section.tone} card-${index} ${game.image ? "has-cover" : ""}`} key={game.title} onClick={() => openDialog("游戏详情", game.title)}>{game.image && <img className="game-cover" src={game.image} alt={`${game.title} 游戏封面`} />}<span className="game-shine" /><span className="game-art" aria-hidden="true">{game.art}</span><span className="game-copy"><strong>{game.title}</strong><small>{game.tag}</small></span></button>)}</div>
       </section>)}
-      <section className="trust-strip"><div><Icon name="shield" /><b>原创界面</b><small>独立设计</small></div><div><Icon name="check" /><b>演示模式</b><small>无真实资金</small></div><div><Icon name="star" /><b>流畅体验</b><small>移动端适配</small></div></section>
-      <p className="legal-note">jbp88 原创前端界面演示，与第三方平台无隶属关系，不提供真钱游戏、充值、提现或账户服务。</p>
+      <section className="trust-strip"><div><Icon name="shield" /><b>安全防护</b><small>数据加密</small></div><div><Icon name="check" /><b>快捷服务</b><small>操作便捷</small></div><div><Icon name="star" /><b>流畅体验</b><small>移动端适配</small></div></section>
     </div>
   </>;
 }
 
 function ActivityView({ openDialog }: { openDialog: (name: DialogName, item?: string) => void }) {
-  return <div className="inner-page"><div className="page-intro"><span>POPULAR EVENTS</span><h2>精彩活动</h2><p>查看当前可体验的演示活动</p></div><div className="activity-list">{activities.map((item) => <article className={`activity-card ${item.tone}`} key={item.title}><div className="activity-icon"><Icon name={item.icon} /></div><div><small>{item.tag}</small><h3>{item.title}</h3><p>{item.copy}</p><button onClick={() => openDialog("活动详情", item.title)}>查看详情 <Icon name="chevron" /></button></div></article>)}</div></div>;
+  return <div className="inner-page"><div className="page-intro"><span>POPULAR EVENTS</span><h2>精彩活动</h2><p>查看当前热门活动</p></div><div className="activity-list">{activities.map((item) => <article className={`activity-card ${item.tone}`} key={item.title}><div className="activity-icon"><Icon name={item.icon} /></div><div><small>{item.tag}</small><h3>{item.title}</h3><p>{item.copy}</p><button onClick={() => openDialog("活动详情", item.title)}>查看详情 <Icon name="chevron" /></button></div></article>)}</div></div>;
 }
 
 function SupportView({ messages, chatText, setChatText, sendMessage, faq, setFaq }: { messages: string[]; chatText: string; setChatText: (value: string) => void; sendMessage: (event: FormEvent<HTMLFormElement>) => void; faq: number | null; setFaq: (value: number | null) => void }) {
-  const questions = [{ q: "这是官方资金平台吗？", a: "不是。本项目仅作原创前端界面与交互展示，不处理真实资金。" }, { q: "为什么按钮可以操作？", a: "所有操作都只保存在当前页面，不会把资料发送到服务器。" }, { q: "如何回到首页？", a: "点击底部“首页”图标即可回到大厅。" }];
-  return <div className="inner-page support-page"><section className="support-hero"><span className="support-avatar"><Icon name="headset" /></span><div><small>在线客服</small><h2>您好，有什么可以帮您？</h2><p><i /> 演示客服在线</p></div></section><section className="chat-box"><div className="chat-messages">{messages.map((message, index) => <div className={index % 2 ? "message mine" : "message"} key={`${message}-${index}`}>{message}</div>)}</div><form onSubmit={sendMessage}><input value={chatText} onChange={(event) => setChatText(event.target.value)} placeholder="输入您的问题…" aria-label="客服消息" /><button aria-label="发送消息"><Icon name="chat" /></button></form></section><h3 className="page-section-title">常见问题</h3><div className="faq-list">{questions.map((item, index) => <button key={item.q} className={faq === index ? "open" : ""} onClick={() => setFaq(faq === index ? null : index)}><span><Icon name="help" />{item.q}<Icon name="chevron" /></span>{faq === index && <p>{item.a}</p>}</button>)}</div></div>;
+  const questions = [{ q: "如何注册账号？", a: "点击页面右上角注册，按提示填写账号资料。" }, { q: "如何联系在线客服？", a: "在当前页面输入问题并发送即可。" }, { q: "如何回到首页？", a: "点击底部“首页”图标即可回到大厅。" }];
+  return <div className="inner-page support-page"><section className="support-hero"><span className="support-avatar"><Icon name="headset" /></span><div><small>在线客服</small><h2>您好，有什么可以帮您？</h2><p><i /> 客服在线</p></div></section><section className="chat-box"><div className="chat-messages">{messages.map((message, index) => <div className={index % 2 ? "message mine" : "message"} key={`${message}-${index}`}>{message}</div>)}</div><form onSubmit={sendMessage}><input value={chatText} onChange={(event) => setChatText(event.target.value)} placeholder="输入您的问题…" aria-label="客服消息" /><button aria-label="发送消息"><Icon name="chat" /></button></form></section><h3 className="page-section-title">常见问题</h3><div className="faq-list">{questions.map((item, index) => <button key={item.q} className={faq === index ? "open" : ""} onClick={() => setFaq(faq === index ? null : index)}><span><Icon name="help" />{item.q}<Icon name="chevron" /></span>{faq === index && <p>{item.a}</p>}</button>)}</div></div>;
 }
 
 function DownloadView({ openDialog }: { openDialog: (name: DialogName, item?: string) => void }) {
-  return <div className="inner-page download-page"><section className="download-hero"><img src="/jbp88-logo.jpg" alt="jbp88 应用图标" /><span>jbp88 MOBILE</span><h2>随时随地 畅享体验</h2><p>选择您的设备查看安全安装说明</p></section><div className="download-cards"><button onClick={() => openDialog("下载说明", "iPhone / iPad")}><span className="os-icon apple"><Icon name="apple" /></span><span><small>Download for</small><b>iPhone / iPad</b></span><Icon name="chevron" /></button><button onClick={() => openDialog("下载说明", "Android")}><span className="os-icon android"><Icon name="android" /></span><span><small>Download for</small><b>Android</b></span><Icon name="chevron" /></button></div><section className="security-note"><Icon name="shield" /><div><b>安全说明</b><p>本页面不会下载或安装任何软件，仅展示完整交互流程。</p></div></section></div>;
+  return <div className="inner-page download-page"><section className="download-hero"><img src="/jbp88-logo.jpg" alt="jbp88 应用图标" /><span>jbp88 MOBILE</span><h2>随时随地 畅享体验</h2><p>选择您的设备查看安全安装说明</p></section><div className="download-cards"><button onClick={() => openDialog("下载说明", "iPhone / iPad")}><span className="os-icon apple"><Icon name="apple" /></span><span><small>Download for</small><b>iPhone / iPad</b></span><Icon name="chevron" /></button><button onClick={() => openDialog("下载说明", "Android")}><span className="os-icon android"><Icon name="android" /></span><span><small>Download for</small><b>Android</b></span><Icon name="chevron" /></button></div><section className="security-note"><Icon name="shield" /><div><b>安全说明</b><p>请通过 jbp88 官方渠道获取安装文件并完成安全检查。</p></div></section></div>;
 }
 
 function ProfileView({ loggedIn, setAuthMode, openDialog, onLogout }: { loggedIn: boolean; setAuthMode: (value: "登录" | "注册" | null) => void; openDialog: (name: DialogName, item?: string) => void; onLogout: () => void }) {
   const menu: Array<{ label: DialogName; icon: IconName }> = [{ label: "任务", icon: "task" }, { label: "我的收入", icon: "income" }, { label: "邀请好友", icon: "invite" }];
-  return <div className="inner-page profile-page"><section className="profile-card"><span className="profile-avatar">{loggedIn ? <img src="/jbp88-logo.jpg" alt="会员头像" /> : <Icon name="user" />}</span><div><small>{loggedIn ? "JBP88 MEMBER" : "WELCOME"}</small><h2>{loggedIn ? "jbp88 演示会员" : "登录后查看会员中心"}</h2><p>{loggedIn ? "演示等级 · 黄金会员" : "所有信息仅保存在当前浏览器"}</p></div></section>{loggedIn ? <section className="balance-card"><small>演示积分</small><strong>8,888</strong><span>今日新增 +88</span></section> : <div className="profile-auth"><button onClick={() => setAuthMode("登录")}>立即登录</button><button onClick={() => setAuthMode("注册")}>注册账号</button></div>}<div className="profile-menu">{menu.map((item) => <button key={item.label} onClick={() => openDialog(item.label)}><span><Icon name={item.icon} /></span><b>{item.label}</b><Icon name="chevron" /></button>)}<button onClick={() => openDialog("活动详情", "账户与安全")}><span><Icon name="settings" /></span><b>账户与安全</b><Icon name="chevron" /></button>{loggedIn && <button className="logout" onClick={onLogout}><span><Icon name="logout" /></span><b>退出登录</b><Icon name="chevron" /></button>}</div></div>;
+  return <div className="inner-page profile-page"><section className="profile-card"><span className="profile-avatar">{loggedIn ? <img src="/jbp88-logo.jpg" alt="会员头像" /> : <Icon name="user" />}</span><div><small>{loggedIn ? "JBP88 MEMBER" : "WELCOME"}</small><h2>{loggedIn ? "jbp88 会员" : "登录后查看会员中心"}</h2><p>{loggedIn ? "会员等级 · 黄金会员" : "登录后管理您的账户"}</p></div></section>{loggedIn ? <section className="balance-card"><small>账户积分</small><strong>8,888</strong><span>今日新增 +88</span></section> : <div className="profile-auth"><button onClick={() => setAuthMode("登录")}>立即登录</button><button onClick={() => setAuthMode("注册")}>注册账号</button></div>}<div className="profile-menu">{menu.map((item) => <button key={item.label} onClick={() => openDialog(item.label)}><span><Icon name={item.icon} /></span><b>{item.label}</b><Icon name="chevron" /></button>)}<button onClick={() => openDialog("活动详情", "账户与安全")}><span><Icon name="settings" /></span><b>账户与安全</b><Icon name="chevron" /></button>{loggedIn && <button className="logout" onClick={onLogout}><span><Icon name="logout" /></span><b>退出登录</b><Icon name="chevron" /></button>}</div></div>;
 }
 
 function AuthDialog({ mode, setMode, onSubmit }: { mode: "登录" | "注册"; setMode: (value: "登录" | "注册" | null) => void; onSubmit: (event: FormEvent<HTMLFormElement>) => void }) {
@@ -204,12 +203,12 @@ function AuthDialog({ mode, setMode, onSubmit }: { mode: "登录" | "注册"; se
 function ActionDialog({ name, selectedItem, onClose, onConfirm }: { name: Exclude<DialogName, null>; selectedItem: string; onClose: () => void; onConfirm: (message: string) => void }) {
   const iconMap: Record<Exclude<DialogName, null>, IconName> = { "充值": "wallet", "提现": "withdraw", "任务": "task", "我的收入": "income", "邀请好友": "invite", "活动详情": "gift", "下载说明": "download", "游戏详情": "slots" };
   return <div className="modal-backdrop sheet-backdrop" onClick={onClose}><section className="action-sheet" role="dialog" aria-modal="true" onClick={(event) => event.stopPropagation()}><div className="sheet-handle" /><button className="close-button" onClick={onClose} aria-label="关闭"><Icon name="close" /></button><span className="sheet-icon"><Icon name={iconMap[name]} /></span><h2>{selectedItem || name}</h2>
-    {(name === "充值" || name === "提现") && <><p>输入演示积分数量，确认后只更新页面提示，不产生真实交易。</p><label className="amount-field"><small>演示积分</small><input type="number" min="1" defaultValue="100" /><b>PTS</b></label><button className="primary-button" onClick={() => onConfirm(`${name}演示已完成`)}>确认{name}</button></>}
+    {(name === "充值" || name === "提现") && <><p>当前资金通道正在配置中，正式开放后可提交{name}申请。</p><label className="amount-field"><small>金额</small><input type="number" min="1" defaultValue="100" /><b>USDT</b></label><button className="primary-button" onClick={() => onConfirm(`${name}通道暂未开放`)}>确认{name}</button></>}
     {name === "任务" && <div className="task-list">{["完成一次登录", "浏览三个游戏分类", "查看今日活动"].map((item, index) => <div key={item}><span className={index < 2 ? "done" : ""}><Icon name={index < 2 ? "check" : "activity"} /></span><b>{item}</b><small>{index < 2 ? "已完成" : "+20 积分"}</small></div>)}</div>}
-    {name === "我的收入" && <div className="income-panel"><small>本周演示积分</small><strong>1,280</strong><div><span>任务奖励<b>880</b></span><span>签到奖励<b>400</b></span></div></div>}
-    {name === "邀请好友" && <><p>复制演示邀请码，与好友分享 jbp88 界面体验。</p><div className="invite-code"><b>JBP88-DEMO</b><button onClick={() => { navigator.clipboard?.writeText("JBP88-DEMO"); onConfirm("邀请码已复制"); }}><Icon name="copy" />复制</button></div></>}
-    {name === "活动详情" && <><p>{selectedItem || "精彩活动"}为可交互演示内容。点击下方按钮即可完成参与流程。</p><button className="primary-button" onClick={() => onConfirm("活动参与成功")}>立即参与</button></>}
-    {name === "下载说明" && <><p>{selectedItem} 安装演示：本项目不提供真实安装包，按钮用于展示完整下载页面流程。</p><ol className="install-steps"><li>确认设备系统版本</li><li>通过官方来源下载安装包</li><li>完成安全检查后安装</li></ol><button className="primary-button" onClick={() => onConfirm("已查看安装说明")}>我知道了</button></>}
-    {name === "游戏详情" && <><div className="game-preview"><Icon name="slots" /><span>DEMO GAME</span></div><p>{selectedItem} 为前端演示游戏入口，不会连接第三方平台或产生真实投注。</p><button className="primary-button" onClick={() => onConfirm(`${selectedItem}演示已启动`)}>开始体验</button></>}
+    {name === "我的收入" && <div className="income-panel"><small>本周积分</small><strong>1,280</strong><div><span>任务奖励<b>880</b></span><span>签到奖励<b>400</b></span></div></div>}
+    {name === "邀请好友" && <><p>复制专属邀请码，与好友分享 jbp88。</p><div className="invite-code"><b>JBP88-VIP</b><button onClick={() => { navigator.clipboard?.writeText("JBP88-VIP"); onConfirm("邀请码已复制"); }}><Icon name="copy" />复制</button></div></>}
+    {name === "活动详情" && <><p>查看{selectedItem || "精彩活动"}的活动内容与参与条件。</p><button className="primary-button" onClick={() => onConfirm("活动参与成功")}>立即参与</button></>}
+    {name === "下载说明" && <><p>请根据您的 {selectedItem} 设备查看安装步骤。</p><ol className="install-steps"><li>确认设备系统版本</li><li>通过官方来源下载安装包</li><li>完成安全检查后安装</li></ol><button className="primary-button" onClick={() => onConfirm("已查看安装说明")}>我知道了</button></>}
+    {name === "游戏详情" && <><div className="game-preview"><Icon name="slots" /><span>JBP88 GAME</span></div><p>{selectedItem} 游戏通道正在配置中。</p><button className="primary-button" onClick={() => onConfirm(`${selectedItem}暂未开放`)}>进入游戏</button></>}
   </section></div>;
 }
